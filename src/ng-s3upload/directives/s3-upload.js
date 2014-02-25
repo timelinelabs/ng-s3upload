@@ -13,7 +13,7 @@ angular.module('ngS3upload.directives', []).
 
         $scope.barClass = function () {
           return {
-            "bar-success": $scope.attempt && !$scope.uploading && $scope.success
+            "progress-bar-success": $scope.attempt && !$scope.uploading && $scope.success
           };
         };
       }],
@@ -89,6 +89,7 @@ angular.module('ngS3upload.directives', []).
                     if (opts.enableValidation) {
                       ngModel.$setValidity('uploading', true);
                       ngModel.$setValidity('succeeded', true);
+                      scope.$emit('s3upload:uploaded');
                     }
                   }, function () {
                     scope.filename = ngModel.$viewValue;
