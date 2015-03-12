@@ -173,6 +173,7 @@ angular.module('ngS3upload.directives', []).
             opts = angular.extend({
               submitOnChange: true,
               getOptionsUri: '/getS3Options',
+              getManualOptions: null,
               acl: 'public-read',
               uploadingKey: 'uploading',
               folder: '',
@@ -198,7 +199,17 @@ angular.module('ngS3upload.directives', []).
               var filename = selectedFile.name;
               var ext = filename.split('.').pop();
 
-              S3Uploader.getUploadOptions(opts.getOptionsUri).then(function (s3Options) {
+              if(angular.isObject(opts.getManualOptions)) {
+                _upload(opts.getManualOptions);
+              } else {
+                S3Uploader.getUploadOptions(opts.getOptionsUri).then(function (s3Options) {
+                  _upload(s3Options);
+                }, function (error) {
+                  throw Error("Can't receive the needed options for S3 " + error);
+                });
+              }
+
+              function _upload(s3Options){
                 if (opts.enableValidation) {
                   ngModel.$setValidity('uploading', false);
                 }
@@ -231,11 +242,7 @@ angular.module('ngS3upload.directives', []).
                       ngModel.$setValidity('succeeded', false);
                     }
                   });
-
-              }, function (error) {
-                throw Error("Can't receive the needed options for S3 " + error);
-              });
-
+              }
             };
 
             element.bind('change', function (nVal) {
@@ -271,21 +278,39 @@ angular.module('ngS3upload').run(['$templateCache', function($templateCache) {
     "    <div class=\"bar\" style=\"width: {{ progress }}%;\" ng-class=\"barClass()\"></div>\n" +
     "    </div>\n" +
     "  <input type=\"file\" style=\"display: none\"/>\n" +
-    "</div>"
+    "</div>\n"
   );
 
 
   $templateCache.put('theme/bootstrap3.html',
     "<div class=\"upload-wrap\">\n" +
     "  <button class=\"btn btn-primary\" type=\"button\"><span ng-if=\"!filename\">Choose file</span><span ng-if=\"filename\">Replace file</span></button>\n" +
-    "  <a ng-href=\"{{ filename }}\" target=\"_blank\" class=\"\" ng-if=\"filename\" > Stored file </a>\n" +
     "  <div class=\"progress\">\n" +
     "    <div class=\"progress-bar progress-bar-striped\" ng-class=\"{active: uploading}\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: {{ progress }}%; margin-top: 10px\" ng-class=\"barClass()\">\n" +
     "      <span class=\"sr-only\">{{progress}}% Complete</span>\n" +
     "    </div>\n" +
     "  </div>\n" +
     "  <input type=\"file\" style=\"display: none\"/>\n" +
-    "</div>"
+    "</div>\n"
+  );
+
+
+  $templateCache.put('theme/multi.html',
+    "<div class=\"upload-wrap\">\n" +
+    "  <button ng-if=\"!filename\" class=\"btn btn-primary\" type=\"button\"><span >Upload Image/Video</span></button>\n" +
+    "  <div ng-if=\"uploading\" class=\"progress\">\n" +
+    "    <div class=\"filename\">{{ filename }}</div>\n" +
+    "    <div class=\"progress-bar progress-bar-striped\" ng-class=\"{active: uploading}\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: {{ progress }}%; margin-top: 10px\" ng-class=\"barClass()\">\n" +
+    "      <span class=\"sr-only\">{{progress}}% Complete</span>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
+    "  <div ng-if=\"success\" class=\"uploaded-file\">\n" +
+    "    <!-- render something like an image -->\n" +
+    "    <img src=\"{{ filename }}\"></img>\n" +
+    "    <button ng-if=\"filename\" class=\"btn btn-primary\" type=\"button\"><span>Delete File</span></button>\n" +
+    "  </div>\n" +
+    "  <input type=\"file\" style=\"display: none\"/>\n" +
+    "</div>\n"
   );
 
 }]);
