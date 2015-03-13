@@ -296,18 +296,25 @@ angular.module('ngS3upload').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('theme/multi.html',
-    "<div class=\"upload-wrap\">\n" +
+    "<div>\n" +
     "  <button ng-show=\"!filename && !uploading\" class=\"btn btn-primary\" type=\"button\"><span >Upload Image / Video</span></button>\n" +
-    "  <div ng-if=\"uploading\" class=\"progress\">\n" +
+    "  <div ng-if=\"uploading\" class=\"progress multi-panel\">\n" +
     "    <div class=\"filename\">{{ filename }}</div>\n" +
     "    <div class=\"progress-bar progress-bar-striped\" ng-class=\"{active: uploading}\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: {{ progress }}%; margin-top: 10px\" ng-class=\"barClass()\">\n" +
     "      <span class=\"sr-only\">{{progress}}% Complete</span>\n" +
     "    </div>\n" +
     "  </div>\n" +
-    "  <div ng-if=\"success\" class=\"uploaded-file\">\n" +
-    "    <!-- render something like an image -->\n" +
+    "  <div ng-if=\"success\" class=\"uploaded-file multi-panel\">\n" +
+    "    <a class=\"btn btn-default\" href=\"#\" title=\"Delete Content\" alt=\"Delete Content\" ng-click=\"deleteContent(contentId)\">\n" +
+    "      <i class=\"fa fa-times\">\n" +
+    "    </a>\n" +
+    "    <!--\n" +
+    "    %a.btn.btn-default{ href: \"javascript:void(0)\", title: \"Delete Show Item\", alt: \"Delete Show Item\",\n" +
+    "\"data-nodrag\" => true, \"ng-click\" => \"deleteShowItem(showItem)\", \"ng-if\" => \"isDeletable(showItem)\" }\n" +
+    "  %i.fa.fa-times\n" +
+    "\n" +
+    "-->\n" +
     "    <img ng-src=\"{{ filename }}\"></img>\n" +
-    "    <button class=\"btn btn-primary\" type=\"button\"><span>Delete File</span></button>\n" +
     "  </div>\n" +
     "  <input type=\"file\" style=\"display: none\"/>\n" +
     "</div>\n"
