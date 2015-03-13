@@ -1,15 +1,22 @@
-<div class="upload-wrap">
+<div>
   <button ng-show="!filename && !uploading" class="btn btn-primary" type="button"><span >Upload Image / Video</span></button>
-  <div ng-if="uploading" class="progress">
+  <div ng-if="uploading" class="progress multi-panel">
     <div class="filename">{{ filename }}</div>
     <div class="progress-bar progress-bar-striped" ng-class="{active: uploading}" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {{ progress }}%; margin-top: 10px" ng-class="barClass()">
       <span class="sr-only">{{progress}}% Complete</span>
     </div>
   </div>
-  <div ng-if="success" class="uploaded-file">
-    <!-- render something like an image -->
+  <div ng-if="success" class="uploaded-file multi-panel">
+    <a class="btn btn-default" href="#" title="Delete Content" alt="Delete Content" ng-click="deleteContent(contentId)">
+      <i class="fa fa-times">
+    </a>
+    <!--
+    %a.btn.btn-default{ href: "javascript:void(0)", title: "Delete Show Item", alt: "Delete Show Item",
+"data-nodrag" => true, "ng-click" => "deleteShowItem(showItem)", "ng-if" => "isDeletable(showItem)" }
+  %i.fa.fa-times
+
+-->
     <img ng-src="{{ filename }}"></img>
-    <button class="btn btn-primary" type="button"><span>Delete File</span></button>
   </div>
   <input type="file" style="display: none"/>
 </div>
