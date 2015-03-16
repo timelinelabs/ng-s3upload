@@ -308,15 +308,9 @@ angular.module('ngS3upload').run(['$templateCache', function($templateCache) {
     "    <a class=\"btn btn-default\" href=\"#\" title=\"Delete Content\" alt=\"Delete Content\" ng-click=\"deleteContent(contentId)\">\n" +
     "      <i class=\"fa fa-times\">\n" +
     "    </a>\n" +
-    "    <!--\n" +
-    "    %a.btn.btn-default{ href: \"javascript:void(0)\", title: \"Delete Show Item\", alt: \"Delete Show Item\",\n" +
-    "\"data-nodrag\" => true, \"ng-click\" => \"deleteShowItem(showItem)\", \"ng-if\" => \"isDeletable(showItem)\" }\n" +
-    "  %i.fa.fa-times\n" +
-    "\n" +
-    "-->\n" +
     "    <img ng-src=\"{{ filename }}\"></img>\n" +
     "  </div>\n" +
-    "  <input type=\"file\" style=\"display: none\"/>\n" +
+    "  <input type=\"file\" accept=\"image/jpeg, image/gif, image/tiff, image/png, video/mov, video/mp4, video/avi\" style=\"display: none\"/>\n" +
     "</div>\n"
   );
 
