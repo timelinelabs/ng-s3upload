@@ -232,7 +232,7 @@ angular.module('ngS3upload.directives', []).
                     if (opts.enableValidation) {
                       ngModel.$setValidity('uploading', true);
                       ngModel.$setValidity('succeeded', true);
-                      scope.$emit('s3upload:uploaded');
+                      scope.$emit('s3upload:uploaded', scope.filename, selectedFile);
                     }
                   }, function () {
                     scope.filename = ngModel.$viewValue;
