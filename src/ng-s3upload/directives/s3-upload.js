@@ -59,15 +59,16 @@ angular.module('ngS3upload.directives', []).
             // returns formats in the form that's understandable by the HTML5 accept attribute
             // example:
             // "image/jpeg, image/gif, video/avi"
-            $scope.acceptedFormats = function () {
+            scope.acceptedFormats = function () {
               var formats = [];
-              if (attrs.accept) {
-                var types = Object.keys(attrs.accept);
+              if (attrs.allowedtypes) {
+                var allowedtypes = JSON.parse(attrs.allowedtypes);
+                var types = Object.keys(allowedtypes);
                 types.forEach(function(type) {
-                  formats = formats.concat(attrs.accept[type].map( function(format) { return type + "/" + format; } ));
+                  formats = formats.concat(allowedtypes[type].map( function(format) { return type + "/" + format; } ));
                 });
               }
-              return (formats.length > 0 ? formats.join(" ") : "*");
+              return (formats.length > 0 ? formats.join(", ") : "*");
             };
 
             var uploadFile = function () {
