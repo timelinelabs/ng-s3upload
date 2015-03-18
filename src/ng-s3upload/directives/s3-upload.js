@@ -62,13 +62,13 @@ angular.module('ngS3upload.directives', []).
             $scope.acceptedFormats = function () {
               var formats = [];
               if (attrs.accept) {
-                var types = Object.keys(attrs.accept)
+                var types = Object.keys(attrs.accept);
                 types.forEach(function(type) {
-                  formats = formats.concat(attrs.accept[type].map( function(format) { return type + "/" + format; } ))
-                })
+                  formats = formats.concat(attrs.accept[type].map( function(format) { return type + "/" + format; } ));
+                });
               }
-              return (formats.length > 0 ? formats.join(" ") : "*")
-            }
+              return (formats.length > 0 ? formats.join(" ") : "*");
+            };
 
             var uploadFile = function () {
               var selectedFile = file[0].files[0];

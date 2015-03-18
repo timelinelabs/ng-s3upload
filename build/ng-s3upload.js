@@ -159,6 +159,7 @@ angular.module('ngS3upload.directives', []).
             "progress-bar-success": $scope.attempt && !$scope.uploading && $scope.success
           };
         };
+
       }],
       compile: function (element, attr, linker) {
         return {
@@ -179,6 +180,7 @@ angular.module('ngS3upload.directives', []).
               folder: '',
               enableValidation: true,
               targetFilename: null
+
             }, opts);
             var bucket = scope.$eval(attrs.bucket);
 
@@ -192,6 +194,23 @@ angular.module('ngS3upload.directives', []).
             // Update the scope with the view value
             ngModel.$render = function () {
               scope.filename = ngModel.$viewValue;
+            };
+
+            // accept should provide an object, nested in the form type -> array of formats
+            // example:
+            // { image: ['jpeg', 'gif'], video: [ 'avi' ] }
+            // returns formats in the form that's understandable by the HTML5 accept attribute
+            // example:
+            // "image/jpeg, image/gif, video/avi"
+            $scope.acceptedFormats = function () {
+              var formats = [];
+              if (attrs.accept) {
+                var types = Object.keys(attrs.accept);
+                types.forEach(function(type) {
+                  formats = formats.concat(attrs.accept[type].map( function(format) { return type + "/" + format; } ));
+                });
+              }
+              return (formats.length > 0 ? formats.join(" ") : "*");
             };
 
             var uploadFile = function () {
@@ -310,7 +329,7 @@ angular.module('ngS3upload').run(['$templateCache', function($templateCache) {
     "    </a>\n" +
     "    <img ng-src=\"{{ filename }}\"></img>\n" +
     "  </div>\n" +
-    "  <input type=\"file\" accept=\"image/jpeg, image/gif, image/tiff, image/png, video/mov, video/mp4, video/avi\" style=\"display: none\"/>\n" +
+    "  <input type=\"file\" accept=\"acceptedFormats()\" style=\"display: none\"/>\n" +
     "</div>\n"
   );
 
