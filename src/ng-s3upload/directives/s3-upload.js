@@ -6,7 +6,7 @@ angular.module('ngS3upload.directives', []).
       replace: true,
       transclude: false,
       scope: true,
-      controller: ['$scope', '$element', '$attrs', '$transclude', function ($scope, $element, $attrs, $transclude) {
+      controller: ['$scope', '$element', '$attrs', '$transclude', '$sce', function ($scope, $element, $attrs, $transclude, $sce) {
         $scope.attempt = false;
         $scope.success = false;
         $scope.uploading = false;
@@ -15,6 +15,10 @@ angular.module('ngS3upload.directives', []).
           return {
             "progress-bar-success": $scope.attempt && !$scope.uploading && $scope.success
           };
+        };
+
+        $scope.trustUrl = function (filename) {
+          return $sce.trustAsResourceUrl(filename);
         };
 
       }],
@@ -105,11 +109,12 @@ angular.module('ngS3upload.directives', []).
                   ).then(function () {
                     ngModel.$setViewValue(s3Uri + key);
                     scope.filename = ngModel.$viewValue;
+                    scope.filetype = selectedFile.type.split("/")[0];
 
                     if (opts.enableValidation) {
                       ngModel.$setValidity('uploading', true);
                       ngModel.$setValidity('succeeded', true);
-                      scope.$emit('s3upload:uploaded', scope.filename, selectedFile);
+                      scope.$emit('s3upload:uploaded', scope.filename, scope.filetype);
                     }
                   }, function () {
                     scope.filename = ngModel.$viewValue;

@@ -10,7 +10,8 @@
     <a class="btn btn-default" href="#" title="Delete Content" alt="Delete Content" ng-click="deleteContent(contentId)">
       <i class="fa fa-times">
     </a>
-    <img ng-src="{{ filename }}"></img>
+    <img ng-if="filetype == 'image'" ng-src="{{ trustUrl(filename) }}"></img>
+    <video ng-if="filetype == 'video'" ng-src="{{ trustUrl(filename) }}" controls></video>
   </div>
   <input type="file" accept="{{acceptedFormats()}}" style="display: none"/>
 </div>
