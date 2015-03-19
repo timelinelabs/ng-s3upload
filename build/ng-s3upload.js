@@ -200,7 +200,7 @@ angular.module('ngS3upload.directives', []).
               scope.filename = ngModel.$viewValue;
             };
 
-            // accept should provide an object, nested in the form type -> array of formats
+            // allowedTypes should be an object, nested in the form type -> array of formats
             // example:
             // { image: ['jpeg', 'gif'], video: [ 'avi' ] }
             // returns formats in the form that's understandable by the HTML5 accept attribute
