@@ -7,9 +7,9 @@
     </div>
   </div>
   <div ng-if="success" class="uploaded-file multi-panel">
-    <a class="btn btn-default" href="#" title="Delete Content" alt="Delete Content" ng-click="deleteContent(contentId)">
-      <i class="fa fa-times">
-    </a>
+    <button class="btn btn-default" alt="Delete Content" ng-click="deleteContent(contentId)">
+      <i class="fa fa-times"></i>
+    </button>
     <img ng-if="filetype == 'image'" ng-src="{{ trustUrl(filename) }}"></img>
     <video ng-if="filetype == 'video'" ng-src="{{ trustUrl(filename) }}" controls></video>
   </div>
