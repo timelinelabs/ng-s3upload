@@ -181,6 +181,7 @@ angular.module('ngS3upload.directives', []).
               getManualOptions: null,
               acl: 'public-read',
               uploadingKey: 'uploading',
+              maxFileSize: 10485760,
               folder: '',
               enableValidation: true,
               targetFilename: null
@@ -234,6 +235,11 @@ angular.module('ngS3upload.directives', []).
               }
 
               function _upload(s3Options){
+                if (selectedFile.size > opts.maxFileSize ) {
+                  alert("File must be smaller than 10MB in size");
+                  return;
+                }
+
                 if (opts.enableValidation) {
                   ngModel.$setValidity('uploading', false);
                 }
