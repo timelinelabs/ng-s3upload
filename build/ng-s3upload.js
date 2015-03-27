@@ -335,13 +335,6 @@ angular.module('ngS3upload').run(['$templateCache', function($templateCache) {
     "      <span class=\"sr-only\">{{progress}}% Complete</span>\n" +
     "    </div>\n" +
     "  </div>\n" +
-    "  <div ng-if=\"success\" class=\"uploaded-file multi-panel\">\n" +
-    "    <button class=\"btn btn-default\" alt=\"Delete Content\" ng-click=\"deleteContent(filename)\">\n" +
-    "      <i class=\"fa fa-times\"></i>\n" +
-    "    </button>\n" +
-    "    <img ng-if=\"filetype == 'image'\" ng-src=\"{{ trustUrl(filename) }}\"></img>\n" +
-    "    <video ng-if=\"filetype == 'video'\" ng-src=\"{{ trustUrl(filename) }}\" controls></video>\n" +
-    "  </div>\n" +
     "  <input type=\"file\" accept=\"{{acceptedFormats()}}\" style=\"display: none\"/>\n" +
     "</div>\n"
   );
