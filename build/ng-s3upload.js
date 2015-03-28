@@ -328,10 +328,13 @@ angular.module('ngS3upload').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('theme/multi.html',
     "<div>\n" +
-    "  <button ng-show=\"!filename && !uploading\" class=\"btn btn-primary\" type=\"button\"><span >Upload Image / Video</span></button>\n" +
+    "  <button ng-show=\"!filename && !uploading\" class=\"btn btn-primary upload-btn\" type=\"button\">\n" +
+    "    <span>Upload Image / Video</span>\n" +
+    "    <i class=\"fa fa-cloud-upload\"></i>\n" +
+    "  </button>\n" +
     "  <div ng-if=\"uploading\" class=\"progress multi-panel\">\n" +
     "    <div class=\"filename\">{{ filename }}</div>\n" +
-    "    <div class=\"progress-bar progress-bar-striped\" ng-class=\"{active: uploading}\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: {{ progress }}%; margin-top: 10px\" ng-class=\"barClass()\">\n" +
+    "    <div class=\"progress-bar progress-bar-striped\" ng-class=\"{active: uploading}\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: {{ progress }}%;\" ng-class=\"barClass()\">\n" +
     "      <span class=\"sr-only\">{{progress}}% Complete</span>\n" +
     "    </div>\n" +
     "  </div>\n" +
