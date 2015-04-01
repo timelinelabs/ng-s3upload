@@ -3,10 +3,12 @@
     <span>Upload Image / Video</span>
     <i class="fa fa-cloud-upload"></i>
   </button>
-  <div ng-if="uploading" class="progress multi-panel">
-    <div class="filename">{{ filename }}</div>
-    <div class="progress-bar progress-bar-striped" ng-class="{active: uploading}" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {{ progress }}%;" ng-class="barClass()">
-      <span class="sr-only">{{progress}}% Complete</span>
+  <div ng-if="uploading" class="progress-card">
+    <div class="filename">{{ uploadName }}</div>
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped" ng-class="{active: uploading}" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {{ progress }}%;" ng-class="barClass()">
+        <span class="sr-only">{{progress}}% Complete</span>
+      </div>
     </div>
   </div>
   <input type="file" accept="{{acceptedFormats()}}" style="display: none"/>

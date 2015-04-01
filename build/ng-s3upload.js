@@ -103,6 +103,7 @@ angular.module('ngS3upload.config', []).
           } else {
             scope.success = false;
             deferred.reject(xhr);
+            scope.uploadName = null;
             scope.$emit('s3upload:error', xhr);
           }
         });
@@ -114,6 +115,7 @@ angular.module('ngS3upload.config', []).
           scope.uploading = false;
           scope.success = false;
           deferred.reject(xhr);
+          scope.uploadName = null;
           scope.$emit('s3upload:error', xhr);
         });
       }
@@ -124,6 +126,7 @@ angular.module('ngS3upload.config', []).
           scope.uploading = false;
           scope.success = false;
           deferred.reject(xhr);
+          scope.uploadName = null;
           scope.$emit('s3upload:abort', xhr);
         });
       }
@@ -246,6 +249,7 @@ angular.module('ngS3upload.directives', []).
 
                 var s3Uri = 'https://' + bucket + '.s3.amazonaws.com/';
                 var key = opts.targetFilename ? scope.$eval(opts.targetFilename) : opts.folder + (new Date()).getTime() + '-' + S3Uploader.randomString(16) + "." + ext;
+                scope.uploadName = filename;
                 S3Uploader.upload(scope,
                     s3Uri,
                     key,
@@ -332,10 +336,12 @@ angular.module('ngS3upload').run(['$templateCache', function($templateCache) {
     "    <span>Upload Image / Video</span>\n" +
     "    <i class=\"fa fa-cloud-upload\"></i>\n" +
     "  </button>\n" +
-    "  <div ng-if=\"uploading\" class=\"progress multi-panel\">\n" +
-    "    <div class=\"filename\">{{ filename }}</div>\n" +
-    "    <div class=\"progress-bar progress-bar-striped\" ng-class=\"{active: uploading}\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: {{ progress }}%;\" ng-class=\"barClass()\">\n" +
-    "      <span class=\"sr-only\">{{progress}}% Complete</span>\n" +
+    "  <div ng-if=\"uploading\" class=\"progress-card\">\n" +
+    "    <div class=\"filename\">{{ uploadName }}</div>\n" +
+    "    <div class=\"progress\">\n" +
+    "      <div class=\"progress-bar progress-bar-striped\" ng-class=\"{active: uploading}\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: {{ progress }}%;\" ng-class=\"barClass()\">\n" +
+    "        <span class=\"sr-only\">{{progress}}% Complete</span>\n" +
+    "      </div>\n" +
     "    </div>\n" +
     "  </div>\n" +
     "  <input type=\"file\" accept=\"{{acceptedFormats()}}\" style=\"display: none\"/>\n" +

@@ -72,6 +72,7 @@ angular.module('ngS3upload.services', []).
           } else {
             scope.success = false;
             deferred.reject(xhr);
+            scope.uploadName = null;
             scope.$emit('s3upload:error', xhr);
           }
         });
@@ -83,6 +84,7 @@ angular.module('ngS3upload.services', []).
           scope.uploading = false;
           scope.success = false;
           deferred.reject(xhr);
+          scope.uploadName = null;
           scope.$emit('s3upload:error', xhr);
         });
       }
@@ -93,6 +95,7 @@ angular.module('ngS3upload.services', []).
           scope.uploading = false;
           scope.success = false;
           deferred.reject(xhr);
+          scope.uploadName = null;
           scope.$emit('s3upload:abort', xhr);
         });
       }
