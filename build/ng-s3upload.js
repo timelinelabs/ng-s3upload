@@ -268,6 +268,7 @@ angular.module('ngS3upload.directives', []).
                       ngModel.$setValidity('uploading', true);
                       ngModel.$setValidity('succeeded', true);
                       scope.$emit('s3upload:uploaded', scope.filename, scope.filetype);
+                      scope.progress = 0;
                     }
                   }, function () {
                     scope.filename = ngModel.$viewValue;
@@ -332,7 +333,7 @@ angular.module('ngS3upload').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('theme/multi.html',
     "<div>\n" +
-    "  <button ng-show=\"!filename && !uploading\" class=\"btn btn-primary upload-btn\" type=\"button\">\n" +
+    "  <button ng-show=\"!uploading\" class=\"btn btn-primary upload-btn\" type=\"button\">\n" +
     "    <span>Upload Image / Video</span>\n" +
     "    <i class=\"fa fa-cloud-upload\"></i>\n" +
     "  </button>\n" +
